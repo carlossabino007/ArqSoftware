@@ -7,6 +7,14 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 </head>
 <?php
+include_once 'lib/nusopa.php';
+$servicio = new soap_server();
+
+$ns = "urn:serviciowsdl";
+$servicio->configureWSDL("Serviciowebconsultaoracle",$ns);
+$servicio->schemaTargetNamespace =$ns;
+
+
 
 set_time_limit(90);
 								//validar usuario de red autorizado
@@ -680,6 +688,10 @@ odbc_close_all();
 echo '<br>';
 
 echo '<a href="../riesgocrediticio/detalle_codigos.xlsx" download="Codigos_PCO"><h2>Descargar Detalle Codigos</h2></a>';	
+
+
+$HTTP_RAW_POST_DATA = isset($HTTP_RAW_POST_DATA) ? $HTTP_RAW_POST_DATA : '';
+$servicio->service($HTTP_RAW_POST_DATA);
 
 ?>
 
